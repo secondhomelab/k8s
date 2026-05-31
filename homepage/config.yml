@@ -21,6 +21,9 @@ data:
       - secondhomelab-k8s:
           - icon: github
             href: https://github.com/maximemoreillon/secondhomelab-k8s
+      - secondhomelab-talos:
+          - icon: github
+            href: https://github.com/maximemoreillon/secondhomelab-talos
 
   custom.css: ""
   custom.js: ""
