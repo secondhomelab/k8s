@@ -12,10 +12,15 @@ data:
 
   widgets.yaml: |
     - greeting:
-        text_size: 3xl
+        text_size: 4xl
         text: Welcome to Second Home(lab)
 
   docker.yaml: ""
-  bookmarks.yaml: ""
+  bookmarks.yaml: |
+    - GitHub repositories:
+      - secondhomelab-k8s:
+          - icon: github
+            href: https://github.com/maximemoreillon/secondhomelab-k8s
+
   custom.css: ""
   custom.js: ""
