@@ -1,5 +1,7 @@
 # Local Path provisioner
 
+Local storage class
+
 ## Install using Helm
 
 ```bash

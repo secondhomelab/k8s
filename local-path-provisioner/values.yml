@@ -9,8 +9,8 @@ storageClassConfigs:
       volumeBindingMode: WaitForFirstConsumer
       allowedTopologies: []
       annotations: {}
-
     nodePathMap:
       - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
         paths:
           - /var/mnt/hdd # Provisioned by Talos user volume
+    # Add SSD class here
