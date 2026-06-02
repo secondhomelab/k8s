@@ -1,3 +1,3 @@
 # Second Home(lab) K8s
 
-Kubernees manifests for GitOps
+Kubernetes manifests and Helm values for GitOps

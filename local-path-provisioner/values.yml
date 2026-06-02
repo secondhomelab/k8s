@@ -1,0 +1,16 @@
+storageClassConfigs:
+  local-path-provisioner-hdd:
+    storageClass:
+      create: true
+      defaultClass: true
+      # Not sure if the following is needed
+      defaultVolumeType: hostPath
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+      allowedTopologies: []
+      annotations: {}
+
+    nodePathMap:
+      - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+        paths:
+          - /var/mnt/hdd # Provisioned by Talos user volume
