@@ -1,6 +1,16 @@
 # Envoy Gateway
 
-Installation with Helm
+```mermaid
+flowchart LR
+u[User] -- HTTPS --> c[Cloudflare]
+c-- tunnel --> g[Envoy gateway]
+g -- HTTP --> a[App A]
+g -- HTTP --> b[App B]
+```
+
+## Controller installation
+
+With Helm
 
 ```bash
 helm upgrade \
@@ -11,6 +21,6 @@ helm upgrade \
   eg oci://docker.io/envoyproxy/gateway-helm
 ```
 
-## TODO
+## Gateway, EnvoyProxy, GatewayClass
 
-- [ ] Figure out if the gateway, gatewayProxy and gatewayClass shouldn't better be in a separate namespace
+Installed using manifest, same namespace
