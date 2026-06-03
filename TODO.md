@@ -7,9 +7,9 @@
 - [x] Envoy Gateway
 - [ ] Argo CD
 - [ ] HashiCorp Vault + ESO
-- [ ] Authentik
 - [ ] Monitoring
   - [ ] Gatus
   - [ ] Prometheus
   - [ ] Node-exporter
   - [ ] Grafana
+- [ ] Authentik
