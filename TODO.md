@@ -12,4 +12,5 @@
   - [ ] Prometheus
   - [ ] Node-exporter
   - [ ] Grafana
+- [ ] Reloader
 - [ ] Authentik

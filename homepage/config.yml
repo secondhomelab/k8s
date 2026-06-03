@@ -6,6 +6,7 @@ metadata:
 data:
   kubernetes.yaml: |
     mode: cluster
+    gateway: true
 
   settings.yaml: ""
   services.yaml: ""

@@ -97,3 +97,4 @@ spec:
   selector:
     app.kubernetes.io/name: frigate
   type: NodePort
+---
