@@ -7,11 +7,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app.kubernetes.io/name: nginx
   template:
     metadata:
       labels:
-        app: nginx
+        app.kubernetes.io/name: nginx
     spec:
       containers:
         - name: nginx
@@ -26,7 +26,7 @@ spec:
   ports:
     - port: 80
   selector:
-    app: nginx
+    app.kubernetes.io/name: nginx
   type: ClusterIP
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -34,6 +34,11 @@ kind: HTTPRoute
 metadata:
   name: nginx
   namespace: test
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: Test
+    gethomepage.dev/icon: nginx
+
 spec:
   hostnames:
     - test.secondhomelab.com
