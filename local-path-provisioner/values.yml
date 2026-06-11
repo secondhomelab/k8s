@@ -13,4 +13,18 @@ storageClassConfigs:
       - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
         paths:
           - /var/mnt/hdd # Provisioned by Talos user volume
-    # Add SSD class here
+
+  local-path-provisioner-ssd:
+    storageClass:
+      create: true
+      defaultClass: false
+      # Not sure if the following is needed
+      defaultVolumeType: hostPath
+      reclaimPolicy: Delete
+      volumeBindingMode: WaitForFirstConsumer
+      allowedTopologies: []
+      annotations: {}
+    nodePathMap:
+      - node: DEFAULT_PATH_FOR_NON_LISTED_NODES
+        paths:
+          - /var/mnt/ssd # Provisioned by Talos user volume

@@ -9,7 +9,11 @@ data:
     gateway: true
 
   settings.yaml: ""
-  services.yaml: ""
+  services.yaml: |
+    - Tailnet:
+      - Proxmox:
+          href: http://100.110.209.113:8006
+          icon: proxmox
 
   widgets.yaml: |
     # - logo:
@@ -17,13 +21,21 @@ data:
     - greeting:
         text_size: 2xl
         text: Welcome to Second Home(lab)
+    # - kubernetes: # Neets metrics server
+    #     cluster:
+    #       show: true
+    #       cpu: true
+    #       memory: true
+    #     nodes:
+    #       show: false
 
   docker.yaml: ""
   bookmarks.yaml: |
-    - GitHub:
-      - secondhomelab:
+    - Links:
+      - github.com/secondhomelab:
           - icon: github
             href: https://github.com/secondhomelab
+            description: Second Homelab GitHub Organization
 
   custom.css: ""
   custom.js: ""

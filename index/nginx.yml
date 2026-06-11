@@ -78,7 +78,7 @@ metadata:
   name: nginx
   namespace: index
   annotations:
-    gethomepage.dev/enabled: "true"
+    gethomepage.dev/enabled: "false"
     gethomepage.dev/name: Index
     gethomepage.dev/icon: nginx
 
