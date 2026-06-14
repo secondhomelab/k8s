@@ -14,8 +14,10 @@ As such, it can be used to create and deploy applications by simply adding an ap
 + │       └── my-app.yml
   ├── app1
   ├── app2
-+ └── my-app/
-+     └── index.html
++ ├── my-app/
++ │   ├── my-manifest.yml
++ │   └── ...
+  └ ...
 ```
 
 ```yml
@@ -44,7 +46,7 @@ spec:
 ```
 
 ```yml
-# my-app/deployment.yml
+# my-app/my-manifest.yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,4 +64,6 @@ spec:
       containers:
         - name: my-app
           image: nginx
+---
+# SVC, HTTPRoute, PVC, etc...
 ```
