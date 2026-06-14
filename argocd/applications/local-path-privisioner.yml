@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: local-path-provisioner
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: local-path-provisioner
+  sources:
+    - repoURL: oci://ghcr.io/rancher/local-path-provisioner/charts
+      chart: local-path-provisioner
+      targetRevision: 0.0.36
+      helm:
+        valueFiles:
+          - $values/local-path-provisioner/values.yml
+    - repoURL: https://github.com/secondhomelab/k8s.git
+      targetRevision: HEAD
+      ref: values
