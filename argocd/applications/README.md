@@ -20,21 +20,27 @@ As such, it can be used to create and deploy applications by simply adding an ap
 
 ```yml
 # argocd/applications/my-application.yml
-project: default
-source:
-  repoURL: https://github.com/secondhomelab/k8s.git
-  path: my-app # Configure this
-  targetRevision: HEAD
-destination:
-  server: https://kubernetes.default.svc
-  namespace: my-namespace # Configure this
-syncPolicy:
-  automated:
-    prune: false
-    selfHeal: false
-    enabled: true
-  syncOptions:
-    - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app # Configure this
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/secondhomelab/k8s.git
+    path: my-app # Configure this
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: my-namespace # Configure this
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      enabled: true
+    syncOptions:
+      - CreateNamespace=true
 ```
 
 ```yml
