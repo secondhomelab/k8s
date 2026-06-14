@@ -4,7 +4,9 @@ metadata:
   name: nextcloud
   namespace: nextcloud
 spec:
-  replicas: 0
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: nextcloud
@@ -15,53 +17,40 @@ spec:
     spec:
       containers:
         - name: nextcloud
-          image: nextcloud
+          image: nextcloud:33.0.5
           resources:
             requests:
-              cpu: 100m
               memory: 256Mi
+              cpu: 25m
             limits:
-              cpu: 500m
-              memory: 1Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nextcloud
-  namespace: nextcloud
-spec:
-  ports:
-    - port: 80
-  selector:
-    app.kubernetes.io/name: nextcloud
-  type: ClusterIP
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  name: nextcloud
-  namespace: nextcloud
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: nextcloud
-    gethomepage.dev/icon: nextcloud
+              memory: 2Gi
+              cpu: 1500m
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: html
+            - mountPath: /var/www/html/data
+              name: data
 
-spec:
-  hostnames:
-    - nextcloud.secondhomelab.com
-  parentRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: eg
-      namespace: envoy-gateway-system
-  rules:
-    - backendRefs:
-        - group: ""
-          kind: Service
-          name: nextcloud
-          port: 80
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
+        - name: cron
+          image: nextcloud:33.0.5
+          command:
+            - /cron.sh
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 25m
+            limits:
+              memory: 2Gi
+              cpu: 1500m
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: html
+            - mountPath: /var/www/html/data
+              name: data
+      volumes:
+        - name: html
+          persistentVolumeClaim:
+            claimName: html
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
