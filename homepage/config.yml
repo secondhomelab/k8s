@@ -14,6 +14,9 @@ data:
       - Proxmox:
           href: http://100.110.209.113:8006
           icon: proxmox
+      - Argo-CD:
+          href: http://100.108.113.103:30080
+          icon: argo-cd
 
   widgets.yaml: |
     # - logo:
