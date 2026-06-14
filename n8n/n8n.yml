@@ -64,6 +64,7 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: N8n
     gethomepage.dev/icon: n8n
+    gethomepage.dev/group: WAN
 
 spec:
   hostnames:

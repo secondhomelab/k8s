@@ -5,8 +5,9 @@ metadata:
   namespace: nextcloud
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: nextcloud
+    gethomepage.dev/name: Nextcloud
     gethomepage.dev/icon: nextcloud
+    gethomepage.dev/group: WAN
 
 spec:
   hostnames:
