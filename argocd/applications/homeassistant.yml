@@ -1,0 +1,15 @@
+project: default
+source:
+  repoURL: https://github.com/secondhomelab/k8s.git
+  path: homeassistant
+  targetRevision: HEAD
+destination:
+  server: https://kubernetes.default.svc
+  namespace: homeassistant
+syncPolicy:
+  automated:
+    prune: false
+    selfHeal: false
+    enabled: true
+  syncOptions:
+    - CreateNamespace=true
