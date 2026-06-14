@@ -17,7 +17,7 @@ spec:
       #     - $values/envoy/values.yml
     - repoURL: https://github.com/secondhomelab/k8s.git
       targetRevision: HEAD
-      path: envoy
+      path: envoy-gateway
       # ref: values
   syncPolicy:
     syncOptions:
