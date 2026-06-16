@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snmp-exporter
+  namespace: monitoring
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snmp-exporter
+  template:
+    metadata:
+      labels:
+        app: snmp-exporter
+    spec:
+      containers:
+        - name: snmp-exporter
+          image: prom/snmp-exporter:v0.26.0
+          args:
+            - --config.file=/etc/snmp_exporter/auths.yml
+            - --config.file=/etc/snmp_exporter/modules.yml
+          volumeMounts:
+            - name: auths
+              mountPath: /etc/snmp_exporter/auths.yml
+              subPath: auths.yml
+            - name: modules
+              mountPath: /etc/snmp_exporter/modules.yml
+              subPath: modules.yml
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+
+      volumes:
+        - name: auths
+          secret:
+            secretName: snmp-exporter-auths
+        - name: modules
+          configMap:
+            name: snmp-exporter-modules
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: snmp-exporter
+  namespace: monitoring
+spec:
+  selector:
+    app: snmp-exporter
+  ports:
+    - port: 9116
+  type: ClusterIP
+
+---

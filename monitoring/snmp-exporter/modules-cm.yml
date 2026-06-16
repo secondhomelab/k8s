@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snmp-exporter-modules
+  namespace: monitoring
+data:
+  modules.yml: |
+    modules:
+      if_mib:
+        walk:
+          - 1.3.6.1.2.1.2        # interfaces
+          - 1.3.6.1.2.1.31.1.1   # ifXTable
+
+          - 1.3.6.1.4.1.14823.2.3.3.1.1.7.1.2   # SSID names
+          - 1.3.6.1.4.1.14823.2.3.3.1.1.7.1.4   # clients per SSID
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.3   # client IPs
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.5   # client hostnames
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.7   # client signal strength (SNR)
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.9   # client tx bytes
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.12  # client rx bytes
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.16  # client association uptime
+          - 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.17  # client SSID index
+
+        metrics:
+
+        - name: aruba_ssid_client_count
+          oid: 1.3.6.1.4.1.14823.2.3.3.1.1.7.1.4
+          type: gauge
+          help: Number of clients associated to this SSID
+          indexes:
+            - labelname: ssid_index
+              type: gauge
+
+        - name: aruba_ssid_name
+          oid: 1.3.6.1.4.1.14823.2.3.3.1.1.7.1.2
+          type: DisplayString
+          help: SSID name
+          indexes:
+            - labelname: ssid_index
+              type: gauge
+        - name: aruba_client_info
+          oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.7
+          type: gauge
+          help: Client signal strength (SNR dB)
+          indexes:
+            - labelname: client_mac
+              type: PhysAddress48
+          lookups:
+            - labels: [client_mac]
+              labelname: hostname
+              oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.5
+              type: DisplayString
+            - labels: [client_mac]
+              labelname: ip
+              oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.3
+              type: InetAddressIPv4
+            - labels: [client_mac]
+              labelname: ssid_index
+              oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.17
+              type: gauge
+        - name: aruba_client_tx_bytes
+          oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.9
+          type: counter
+          help: Total bytes transmitted by client
+          indexes:
+            - labelname: client_mac
+              type: PhysAddress48
+          lookups:
+            - labels: [client_mac]
+              labelname: hostname
+              oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.5
+              type: DisplayString
+        - name: aruba_client_rx_bytes
+          oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.12
+          type: counter
+          help: Total bytes received by client
+          indexes:
+            - labelname: client_mac
+              type: PhysAddress48
+          lookups:
+            - labels: [client_mac]
+              labelname: hostname
+              oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.5
+              type: DisplayString
+        - name: aruba_client_uptime_seconds
+          oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.16
+          type: gauge
+          help: Client association uptime in centiseconds
+          indexes:
+            - labelname: client_mac
+              type: PhysAddress48
+          lookups:
+            - labels: [client_mac]
+              labelname: hostname
+              oid: 1.3.6.1.4.1.14823.2.3.3.1.2.4.1.5
+              type: DisplayString
