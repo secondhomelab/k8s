@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apcupsd-exporter
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apcupsd-exporter
+  template:
+    metadata:
+      labels:
+        app: apcupsd-exporter
+    spec:
+      containers:
+        - name: apcupsd-exporter
+          image: b3vis/apcupsd_exporter
+          env:
+            - name: APCUPSDADDR
+              value: 192.168.1.10:3551
+          resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apcupsd-exporter
+  namespace: monitoring
+spec:
+  ports:
+    - port: 9162
+  selector:
+    app: apcupsd-exporter
+  type: ClusterIP
