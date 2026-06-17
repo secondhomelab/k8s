@@ -8,7 +8,9 @@ data:
     mode: cluster
     gateway: true
 
-  settings.yaml: ""
+  settings.yaml: |
+    disableIndexing: true
+
   services.yaml: |
     - Tailnet:
       - Proxmox:
