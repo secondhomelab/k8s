@@ -41,6 +41,10 @@ data:
           - icon: github
             href: https://github.com/secondhomelab
             description: Second Homelab GitHub Organization
+      - Discord:
+          - icon: discord
+            href: https://discord.com/channels/1516025097746514041/1516650697507078295
+            description: Second Homelab Discord server
 
   custom.css: ""
   custom.js: ""
