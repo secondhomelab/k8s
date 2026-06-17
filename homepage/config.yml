@@ -21,23 +21,14 @@ data:
           icon: argo-cd
 
   widgets.yaml: |
-    # - logo:
-    #     icon: https://avatars.githubusercontent.com/u/290229801
     - greeting:
         text_size: 2xl
         text: Welcome to Second Home(lab)
-    # - kubernetes: # Neets metrics server
-    #     cluster:
-    #       show: true
-    #       cpu: true
-    #       memory: true
-    #     nodes:
-    #       show: false
 
   docker.yaml: ""
   bookmarks.yaml: |
     - Links:
-      - github.com/secondhomelab:
+      - GitHub:
           - icon: github
             href: https://github.com/secondhomelab
             description: Second Homelab GitHub Organization
