@@ -6,11 +6,11 @@
 - [x] Cloudflare tunnel
 - [x] Envoy Gateway
 - [x] Argo CD
-- [ ] HashiCorp Vault + ESO
-- [ ] Monitoring
-  - [ ] Gatus
-  - [ ] Prometheus
-  - [ ] Node-exporter
-  - [ ] Grafana
+- [x] Monitoring
+  - [x] Gatus
+  - [x] Prometheus
+  - [x] Node-exporter
+  - [x] Grafana
 - [x] Reloader
-- [ ] SSO with Authentik
+- [ ] Authentik
+- [ ] HashiCorp Vault + ESO
