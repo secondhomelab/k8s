@@ -34,6 +34,7 @@ spec:
             - name: WEBHOOK_URL
               value: https://n8n.secondhomelab.com
 
+            # DB
             - name: DB_TYPE
               value: postgresdb
             - name: DB_POSTGRESDB_DATABASE
@@ -42,6 +43,16 @@ spec:
               value: postgresql.postgresql
             - name: DB_POSTGRESDB_PORT
               value: "5432"
+
+            # SMTP
+            - name: N8N_SMTP_HOST
+              value: smtp.mailgun.org
+            - name: N8N_SMTP_PORT
+              value: "465"
+            - name: N8N_SMTP_SSL
+              value: "true"
+            - name: N8N_SMTP_STARTTLS
+              value: "true"
 ---
 apiVersion: v1
 kind: Service
