@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord2line
+  namespace: moreillon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: discord2line
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: discord2line
+    spec:
+      containers:
+        - name: discord2line
+          image: moreillon/discord2line:sha-a575661
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 10m
+            limits:
+              memory: 256Mi
+              cpu: 500m
+          envFrom:
+            - secretRef:
+                name: discord2line-env
