@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: discord2line
-          image: moreillon/discord2line:sha-985846e
+          image: moreillon/discord2line:sha-b9645b4
           resources:
             requests:
               memory: 128Mi
