@@ -1,0 +1,12 @@
+global:
+  envFrom:
+    - secretRef:
+        name: env
+
+authentik:
+  postgresql:
+    host: postgresql.postgresql
+    name: authentik
+
+postgresql:
+  enabled: false
