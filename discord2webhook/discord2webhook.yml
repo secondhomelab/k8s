@@ -1,21 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: discord2line
+  name: discord2webhook
   namespace: moreillon
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: discord2line
+      app.kubernetes.io/name: discord2webhook
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: discord2line
+        app.kubernetes.io/name: discord2webhook
     spec:
       containers:
-        - name: discord2line
-          image: moreillon/discord2line:sha-b9645b4
+        - name: discord2webhook
+          image: moreillon/discord2webhook:sha-fea5471
           resources:
             requests:
               memory: 128Mi
@@ -25,4 +27,4 @@ spec:
               cpu: 500m
           envFrom:
             - secretRef:
-                name: discord2line-env
+                name: discord2webhook-env
