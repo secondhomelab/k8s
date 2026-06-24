@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: pgvector/pgvector:0.8.1-pg18
+          image: pgvector/pgvector:0.8.1-pg18 # Using pgVector for Immich
           resources:
             requests:
               cpu: 25m

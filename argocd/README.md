@@ -1,4 +1,4 @@
-ArgoCD
+# ArgoCD
 
 ```bash
 helm upgrade \

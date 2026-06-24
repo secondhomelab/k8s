@@ -12,5 +12,5 @@
   - [x] Node-exporter
   - [x] Grafana
 - [x] Reloader
-- [ ] Authentik
+- [x] Authentik
 - [ ] HashiCorp Vault + ESO
