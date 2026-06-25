@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: n8n
-          image: n8nio/n8n:2.17.7
+          image: n8nio/n8n:2.27.4
           resources:
             requests:
               memory: "256Mi"
