@@ -33,24 +33,6 @@ data:
             labels: 
               instance: UPS
 
-      # - job_name: cadvisor
-      #   metrics_path: /metrics/cadvisor
-      #   scheme: https
-      #   tls_config:
-      #     insecure_skip_verify: true
-      #   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      #   kubernetes_sd_configs:
-      #     - role: node
-      #   relabel_configs:
-      #     - action: labelmap
-      #       regex: __meta_kubernetes_node_label_(.+)
-      #     - target_label: __address__
-      #       replacement: kubernetes.default.svc:443
-      #     - source_labels: [__meta_kubernetes_node_name]
-      #       regex: (.+)
-      #       target_label: __metrics_path__
-      #       replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
       - job_name: snmp-exporter
         metrics_path: /snmp
         scheme: http
@@ -67,3 +49,21 @@ data:
             target_label: instance
           - target_label: __address__
             replacement: snmp-exporter:9116
+
+      - job_name: cadvisor
+        metrics_path: /metrics/cadvisor
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        kubernetes_sd_configs:
+          - role: node
+        relabel_configs:
+          - action: labelmap
+            regex: __meta_kubernetes_node_label_(.+)
+          - target_label: __address__
+            replacement: kubernetes.default.svc:443
+          - source_labels: [__meta_kubernetes_node_name]
+            regex: (.+)
+            target_label: __metrics_path__
+            replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
