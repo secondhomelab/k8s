@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: discord2webhook
-          image: moreillon/discord2webhook:sha-fea5471
+          image: moreillon/discord2webhook:sha-d336881
           resources:
             requests:
               memory: 128Mi
