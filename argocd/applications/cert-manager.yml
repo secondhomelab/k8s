@@ -19,3 +19,7 @@ spec:
       targetRevision: HEAD
       ref: values
       path: cert-manager
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
