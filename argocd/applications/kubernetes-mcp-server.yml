@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubernetes-mcp-server
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubernetes-mcp-server
+  sources:
+    - repoURL: ghcr.io/rancher/kubernetes-mcp-server/charts
+      chart: kubernetes-mcp-server
+      targetRevision: 0.0.36
+      helm:
+        valueFiles:
+          - $values/kubernetes-mcp-server/values.yml
+    - repoURL: https://github.com/secondhomelab/k8s.git
+      targetRevision: HEAD
+      ref: values
