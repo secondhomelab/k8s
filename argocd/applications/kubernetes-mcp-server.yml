@@ -9,9 +9,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: kubernetes-mcp-server
   sources:
-    - repoURL: ghcr.io/rancher/kubernetes-mcp-server/charts
+    - repoURL: ghcr.io/containers/charts
       chart: kubernetes-mcp-server
-      targetRevision: 0.0.36
+      targetRevision: 0.1.0
       helm:
         valueFiles:
           - $values/kubernetes-mcp-server/values.yml
