@@ -1,1 +1,10 @@
-# Nothing for now
+ingress:
+  enabled: false
+
+rbac:
+  create: true
+  extraClusterRoleBindings:
+    - name: use-view-role
+      roleRef:
+        name: view
+        external: true
