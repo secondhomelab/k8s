@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openport-exporter
+  namespace: monitoring
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openport-exporter
+  template:
+    metadata:
+      labels:
+        app: openport-exporter
+    spec:
+      containers:
+        - name: openport-exporter
+          image: ghcr.io/renatogalera/openport-exporter:latest
+          env:
+            - name: CONFIG_PATH
+              value: /etc/openport-exporter/config.yaml
+          # securityContext:
+          #   runAsNonRoot: true
+          #   runAsUser: 65532
+          #   allowPrivilegeEscalation: false
+          #   readOnlyRootFilesystem: true
+          #   capabilities:
+          #     drop: ["ALL"]
+          #     add: ["NET_RAW"] # required for SYN scans
+
+          volumeMounts:
+            - name: config
+              mountPath: /etc/openport-exporter/config.yaml
+              subPath: config.yaml
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+
+      volumes:
+        - name: config
+          configMap:
+            name: openport-exporter-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openport-exporter
+  namespace: monitoring
+spec:
+  selector:
+    app: openport-exporter
+  ports:
+    - port: 9919
+  type: ClusterIP
+
+---
