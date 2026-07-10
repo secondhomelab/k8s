@@ -69,6 +69,7 @@ metadata:
     gethomepage.dev/name: RustFS
     gethomepage.dev/icon: rustfs
     gethomepage.dev/group: WAN
+    gethomepage.dev/pod-selector: app.kubernetes.io/name=rustfs
 spec:
   hostnames:
     - rustfs.secondhomelab.com
