@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openport-exporter-config
+  namespace: monitoring
+data:
+  config.yaml: |
+    server:
+      port: 9919
+    scanning:
+      interval: 600          # 10m; global default, can be overridden per-target
+      port_range: "1"        # host discovery only, not interested in port state
+      max_cidr_size: 24
+      timeout: 300
+      duration_metrics: false
+      disable_dns_resolution: true
+      udp_scan: false
+      use_syn_scan: false
+      disable_host_discovery: false
+    scheduler:
+      worker_count: 5
+      task_queue_size: 100
+    targets:
+      - name: lan
+        target: "192.168.1.0/24"
+        protocol: "tcp"
