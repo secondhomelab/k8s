@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secondhome-okf-mcp
+  namespace: moreillon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secondhome-okf-mcp
+  template:
+    metadata:
+      labels:
+        app: secondhome-okf-mcp
+    spec:
+      volumes:
+        - name: bundle
+          emptyDir: {}
+      initContainers:
+        - name: clone-bundle
+          image: alpine/git:2.45.2
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              echo "Cloning ${GIT_REPO_URL} @ ${GIT_REF}"
+              git clone --no-checkout "${GIT_REPO_URL}" /mnt/bundle
+              cd /mnt/bundle
+              git checkout "${GIT_REF}"
+              RESOLVED_SHA=$(git rev-parse HEAD)
+              echo "Resolved commit: ${RESOLVED_SHA}"
+              echo "${RESOLVED_SHA}" > /mnt/bundle/.resolved_sha
+              # bundle content lives under bundlePath within the repo
+              if [ ! -d "/mnt/bundle/${BUNDLE_PATH}" ]; then
+                echo "ERROR: bundlePath '${BUNDLE_PATH}' not found in repo" >&2
+                exit 1
+              fi
+          env:
+            - name: GIT_REPO_URL
+              value: https://github.com/secondhomelab/secondhome-okf.git
+            - name: GIT_REF
+              value: HEAD
+            - name: BUNDLE_PATH
+              value: bundle
+          volumeMounts:
+            - name: bundle
+              mountPath: /mnt/bundle
+
+      containers:
+        - name: secondhome-okf-mcp
+          image: moreillon/okf-mcp:sha-18200c0
+          env:
+            - name: BUNDLE_PATH
+              value: /mnt/bundle
+            - name: FASTMCP_HOST
+              value: 0.0.0.0
+
+          volumeMounts:
+            - name: bundle
+              mountPath: /mnt/bundle
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 10m
+            limits:
+              memory: 500Mi
+              cpu: 256m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secondhome-okf-mcp
+  namespace: moreillon
+spec:
+  ports:
+    - port: 8000
+  selector:
+    app: secondhome-okf-mcp
+  type: ClusterIP
