@@ -1,0 +1,19 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: rustfs
+  namespace: postgresql
+spec:
+  retentionPolicy: 7d
+  configuration:
+    destinationPath: s3://cnpg/
+    endpointURL: http://rustfs.rustfs:9000
+    s3Credentials:
+      accessKeyId:
+        name: rustfs
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: rustfs
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip
