@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: machine-learning
+  namespace: immich
+spec:
+  replicas: 0
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: machine-learning
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: machine-learning
+    spec:
+      containers:
+        - name: machine-learning
+          image: ghcr.io/immich-app/immich-machine-learning:v3.0.2
+          env:
+            - name: IMMICH_PORT
+              value: "3003"
+          envFrom:
+            - secretRef:
+                name: env
+            - configMapRef:
+                name: env
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 25m
+            limits:
+              memory: 2Gi
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: machine-learning
+  namespace: immich
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: machine-learning
+  ports:
+    - port: 3003
