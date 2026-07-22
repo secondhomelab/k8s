@@ -47,10 +47,6 @@ spec:
             - name: OPENCV_FFMPEG_CAPTURE_OPTIONS # IMPORTANT: Fixing probes
               value: rtsp_transport;tcp
 
-          envFrom:
-            - secretRef:
-                name: env
-
           resources:
             requests:
               cpu: "1"
