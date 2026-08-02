@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: lmetrics-server
+  name: metrics-server
   namespace: argocd
 spec:
   project: default
   destination:
     server: https://kubernetes.default.svc
-    namespace: lmetrics-server
+    namespace: metrics-server
   sources:
     - repoURL: https://kubernetes-sigs.github.io/metrics-server
-      chart: lmetrics-server
+      chart: metrics-server
       targetRevision: 3.13.1
       helm:
         valueFiles:
