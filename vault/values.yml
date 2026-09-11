@@ -1,0 +1,14 @@
+ui:
+  enabled: true
+  serviceType: NodePort
+  serviceNodePort: 30843
+
+injector:
+  enabled: false
+
+server:
+  dataStorage:
+    storageClass: local-path-provisioner-hdd
+
+  ingress:
+    enabled: false

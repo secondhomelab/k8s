@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-secrets
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-secrets
+  sources:
+    - repoURL: https://charts.external-secrets.io
+      chart: external-secrets
+      targetRevision: 2.6.0
+    - repoURL: git@github.com:maximemoreillon/homelab-k8s.git
+      targetRevision: HEAD
+      path: es
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
