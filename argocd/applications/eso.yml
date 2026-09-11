@@ -12,7 +12,7 @@ spec:
     - repoURL: https://charts.external-secrets.io
       chart: external-secrets
       targetRevision: 2.6.0
-    - repoURL: git@github.com:maximemoreillon/homelab-k8s.git
+    - repoURL: https://github.com/secondhomelab/k8s.git
       targetRevision: HEAD
       path: es
   syncPolicy:

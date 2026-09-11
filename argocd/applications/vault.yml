@@ -15,7 +15,7 @@ spec:
       helm:
         valueFiles:
           - $values/vault/values.yml
-    - repoURL: git@github.com:maximemoreillon/homelab-k8s.git
+    - repoURL: https://github.com/secondhomelab/k8s.git
       targetRevision: HEAD
       ref: values
       # path: vault # Unsealer
