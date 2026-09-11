@@ -18,7 +18,7 @@ spec:
           image: b3vis/apcupsd_exporter
           env:
             - name: APCUPSDADDR
-              value: 192.168.1.10:3551
+              value: 192.168.1.83:3551
           resources: {}
 ---
 apiVersion: v1
