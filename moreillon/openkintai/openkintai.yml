@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: openkintai
-          image: moreillon/openkintai:sha-00eb2ab
+          image: moreillon/openkintai
           resources:
             requests:
               memory: 128Mi
