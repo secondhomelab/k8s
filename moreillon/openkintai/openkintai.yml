@@ -25,6 +25,23 @@ spec:
             limits:
               memory: 256Mi
               cpu: 500m
+          env:
+            - name: NUXT_OAUTH_OIDC_CLIENT_ID
+              value: UKR51UQmW8FnX2dYGxunjzE8S3ga2dkiacXwU0lR
+            - name: NUXT_OAUTH_OIDC_CLIENT_SECRET
+              value: whatever
+            - name: NUXT_OAUTH_OIDC_OPENID_CONFIG
+              value: https://authentik.secondhomelab.com/application/o/openkintai/.well-known/openid-configuration
+            - name: NUXT_MANAGER_GROUP
+              value: openkintai-managers
+            - name: NUXT_PUBLIC_USER_MANAGEMENT_URL
+              value: https://authentik.secondhomelab.com/if/admin/#/identity/users;%7B%22path%22%3A%22users%2Fopenkintai%22%7D
+            - name: TZ
+              value: Asia/Tokyo
+            - name: NUXT_OAUTH_OIDC_REDIRECT_URL
+              value: https://openkintai.secondhomelab.com/auth/oidc
+            - name: NUXT_PUBLIC_BREAK_RULES
+              value: 6:30,8:60
           envFrom:
             - secretRef:
                 name: openkintai-env
