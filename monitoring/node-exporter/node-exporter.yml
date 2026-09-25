@@ -16,7 +16,7 @@ spec:
       hostNetwork: true
       hostPID: true
       containers:
-        - image: prom/node-exporter
+        - image: prom/node-exporter:v1.12.1
           name: node-exporter
           args:
             - --path.procfs=/host/proc

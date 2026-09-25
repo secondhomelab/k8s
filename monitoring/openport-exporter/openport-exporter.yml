@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: openport-exporter
-          image: ghcr.io/renatogalera/openport-exporter:latest
+          image: ghcr.io/renatogalera/openport-exporter:0.4.0
           env:
             - name: CONFIG_PATH
               value: /etc/openport-exporter/config.yaml
