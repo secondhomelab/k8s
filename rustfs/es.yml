@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: env
+  namespace: rustfs
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: env
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: rustfs

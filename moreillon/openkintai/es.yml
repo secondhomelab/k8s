@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: openkintai-env
+  namespace: moreillon
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: openkintai-env
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: openkintai

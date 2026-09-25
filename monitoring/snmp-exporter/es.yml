@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: snmp-exporter-auths
+  namespace: monitoring
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: snmp-exporter-auths
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: snmp-exporter

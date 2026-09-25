@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: rustfs
+  namespace: postgresql
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: rustfs
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: postgresql-rustfs
