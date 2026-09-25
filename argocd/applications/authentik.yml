@@ -20,5 +20,9 @@ spec:
       path: authentik/manifests
       ref: values
   syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      enabled: true
     syncOptions:
       - CreateNamespace=true
