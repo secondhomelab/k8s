@@ -29,8 +29,14 @@ spec:
     spec:
       containers:
         - name: rustfs
-          image: rustfs/rustfs:latest
-          resources: {}
+          image: rustfs/rustfs:1.0.0
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
           env: []
           envFrom:
             - secretRef:
