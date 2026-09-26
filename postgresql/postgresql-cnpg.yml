@@ -52,4 +52,4 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
-        barmanObjectName: rustfs
+        barmanObjectName: linode
