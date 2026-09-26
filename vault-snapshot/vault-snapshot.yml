@@ -20,7 +20,7 @@ spec:
     creationPolicy: Orphan
   dataFrom:
     - extract:
-        key: vault-snapshot
+        key: vault-snapshots
 ---
 apiVersion: batch/v1
 kind: CronJob
