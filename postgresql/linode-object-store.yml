@@ -1,0 +1,21 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: linode
+  namespace: postgresql
+spec:
+  retentionPolicy: 30d
+  configuration:
+    destinationPath: s3://moreillon-cnpg/second-home/
+    endpointURL: https://jp-osa-1.linodeobjects.com
+    s3Credentials:
+      accessKeyId:
+        name: linode
+        key: ACCESS_KEY_ID
+      secretAccessKey:
+        name: linode
+        key: ACCESS_SECRET_KEY
+    wal:
+      compression: gzip
+    data:
+      compression: gzip

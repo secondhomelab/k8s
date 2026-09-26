@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: linode
+  namespace: postgresql
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: linode
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: cnpg-barman-linode
