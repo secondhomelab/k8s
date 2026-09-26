@@ -1,4 +1,4 @@
-# Daily Raft snapshot of Vault, uploaded off-site to home's RustFS
+# Daily Raft snapshot of Vault, uploaded off-site to Linode Object Storage
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -71,9 +71,9 @@ spec:
                 - name: RCLONE_CONFIG_DEST_TYPE
                   value: s3
                 - name: RCLONE_CONFIG_DEST_PROVIDER
-                  value: Other
+                  value: Linode
                 - name: RCLONE_CONFIG_DEST_ENDPOINT
-                  value: https://s3.home.maximemoreillon.com
+                  value: https://jp-osa-1.linodeobjects.com
                 - name: RCLONE_CONFIG_DEST_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
@@ -89,8 +89,8 @@ spec:
                 - -c
                 - |
                   set -e
-                  rclone copy /snapshots dest:vault-snapshots/second-home/ -v
-                  rclone delete dest:vault-snapshots/second-home/ --min-age 30d -v
+                  rclone copy /snapshots dest:moreillon-vault-snapshots/second-home/ -v
+                  rclone delete dest:moreillon-vault-snapshots/second-home/ --min-age 30d -v
               volumeMounts:
                 - name: snapshots
                   mountPath: /snapshots
