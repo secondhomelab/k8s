@@ -2,4 +2,4 @@
 
 Implemented using CloudNative PG
 
-Backups to RustFS with Barman Cloud CNPG-I plugin
+Backups to Linode Object Storage (`s3://moreillon-cnpg/second-home/`) with Barman Cloud CNPG-I plugin
