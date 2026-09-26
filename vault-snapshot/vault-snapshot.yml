@@ -1,0 +1,99 @@
+# Daily Raft snapshot of Vault, uploaded off-site to home's RustFS
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-snapshot
+  namespace: vault-snapshot
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: s3
+  namespace: vault-snapshot
+spec:
+  refreshInterval: 1h0m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: s3
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: vault-snapshot
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vault-snapshot
+  namespace: vault-snapshot
+spec:
+  schedule: "0 3 * * *"
+  timeZone: Asia/Tokyo
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          serviceAccountName: vault-snapshot
+          restartPolicy: Never
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 100
+            runAsGroup: 1000
+          initContainers:
+            # Logs in with the pod's service account and saves a snapshot
+            - name: snapshot
+              image: hashicorp/vault:2.0.2
+              env:
+                - name: VAULT_ADDR
+                  value: http://vault-active.vault:8200
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+                  export VAULT_TOKEN=$(vault write -field=token auth/kubernetes/login role=vault-snapshot \
+                    jwt=@/var/run/secrets/kubernetes.io/serviceaccount/token)
+                  vault operator raft snapshot save /snapshots/vault-$(date +%Y%m%d-%H%M%S).snap
+                  ls -l /snapshots
+              volumeMounts:
+                - name: snapshots
+                  mountPath: /snapshots
+          containers:
+            # Uploads the snapshot and deletes the ones older than 30 days
+            - name: upload
+              image: rclone/rclone:1.75.1
+              env:
+                - name: RCLONE_CONFIG_DEST_TYPE
+                  value: s3
+                - name: RCLONE_CONFIG_DEST_PROVIDER
+                  value: Other
+                - name: RCLONE_CONFIG_DEST_ENDPOINT
+                  value: https://s3.home.maximemoreillon.com
+                - name: RCLONE_CONFIG_DEST_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: s3
+                      key: ACCESS_KEY_ID
+                - name: RCLONE_CONFIG_DEST_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: s3
+                      key: SECRET_ACCESS_KEY
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -e
+                  rclone copy /snapshots dest:vault-snapshots/second-home/ -v
+                  rclone delete dest:vault-snapshots/second-home/ --min-age 30d -v
+              volumeMounts:
+                - name: snapshots
+                  mountPath: /snapshots
+          volumes:
+            - name: snapshots
+              emptyDir: {}
