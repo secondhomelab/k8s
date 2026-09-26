@@ -12,3 +12,13 @@ server:
 
   ingress:
     enabled: false
+
+  # Single-server Raft (integrated storage), migrated from file storage on 2026-09-26
+  ha:
+    enabled: true
+    replicas: 1
+    disruptionBudget:
+      enabled: false # 1 replica => the chart's PDB allows 0 disruptions and blocks node drains
+    raft:
+      enabled: true
+      setNodeId: true # Raft node ID = pod name (vault-0)
