@@ -13,4 +13,4 @@
   - [x] Grafana
 - [x] Reloader
 - [x] Authentik
-- [ ] HashiCorp Vault + ESO
+- [x] HashiCorp Vault + ESO
