@@ -17,7 +17,7 @@ metadata:
   name: immich
   namespace: immich
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
   selector:
