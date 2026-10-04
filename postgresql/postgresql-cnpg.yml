@@ -5,40 +5,17 @@ metadata:
   namespace: postgresql
 spec:
   instances: 1
+  enablePDB: false
   imageName: ghcr.io/cloudnative-pg/postgresql:18.3-standard-trixie
   enableSuperuserAccess: true
+
+  env:
+    - name: TZ
+      value: Asia/tokyo
 
   storage:
     storageClass: local-path-provisioner-ssd
     size: 5Gi
-
-  bootstrap:
-    initdb:
-      import:
-        type: monolith
-        databases:
-          - authentik
-          - grafana
-          - n8n
-          - nextcloud
-        roles:
-          - authentik
-          - grafana
-          - n8n
-          - nextcloud
-        source:
-          externalCluster: postgresql-standalone
-
-  externalClusters:
-    - name: postgresql-standalone
-      connectionParameters:
-        host: postgresql.postgresql
-        user: postgres
-        dbname: postgres
-        sslmode: disable
-      password:
-        name: env
-        key: POSTGRES_PASSWORD
 
   resources:
     requests:
