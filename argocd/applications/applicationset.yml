@@ -1,0 +1,72 @@
+# Plain-directory apps: one Application per element, all with the same spec.
+# Helm-based apps keep their own file in applications/.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  syncPolicy:
+    # Deleting the ApplicationSet keeps the apps' resources in the cluster
+    preserveResourcesOnDeletion: true
+  generators:
+    - list:
+        # namespace defaults to name
+        elements:
+          - { name: frigate, path: frigate }
+          - { name: grafana, path: grafana }
+          - { name: homeassistant, path: homeassistant }
+          - { name: homepage, path: homepage }
+          - { name: immich, path: immich }
+          - { name: n8n, path: n8n }
+          - { name: nextcloud, path: nextcloud }
+          - { name: postgresql, path: postgresql }
+          - { name: vault-snapshot, path: vault-snapshot }
+          - {
+              name: apcupsd-exporter,
+              path: monitoring/apcupsd-exporter,
+              namespace: monitoring,
+            }
+          - { name: gatus, path: monitoring/gatus, namespace: monitoring }
+          - {
+              name: node-exporter,
+              path: monitoring/node-exporter,
+              namespace: monitoring,
+            }
+          - {
+              name: prometheus,
+              path: monitoring/prometheus,
+              namespace: monitoring,
+            }
+          - {
+              name: snmp-exporter,
+              path: monitoring/snmp-exporter,
+              namespace: monitoring,
+            }
+          - { name: cloudflared, path: cloudflare, namespace: cloudflare }
+          - {
+              name: openkintai,
+              path: moreillon/openkintai,
+              namespace: moreillon,
+            }
+  template:
+    metadata:
+      name: "{{ .name }}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/secondhomelab/k8s.git
+        path: "{{ .path }}"
+        targetRevision: HEAD
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ index . "namespace" | default .name }}'
+      syncPolicy:
+        automated:
+          enabled: true
+          prune: false
+          selfHeal: false
+        syncOptions:
+          - CreateNamespace=true
