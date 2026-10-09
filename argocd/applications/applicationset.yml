@@ -56,6 +56,16 @@ spec:
               path: moreillon/openkintai,
               namespace: moreillon,
             }
+          - {
+              name: discord2webhook,
+              path: moreillon/discord2webhook,
+              namespace: moreillon,
+            }
+          - {
+              name: okf-mcp,
+              path: moreillon/okf-mcp,
+              namespace: moreillon,
+            }
   template:
     metadata:
       name: "{{ .name }}"
