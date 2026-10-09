@@ -36,6 +36,11 @@ spec:
               namespace: monitoring,
             }
           - {
+              name: openport-exporter,
+              path: monitoring/openport-exporter,
+              namespace: monitoring,
+            }
+          - {
               name: prometheus,
               path: monitoring/prometheus,
               namespace: monitoring,
