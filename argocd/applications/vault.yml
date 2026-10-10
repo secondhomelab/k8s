@@ -21,5 +21,4 @@ spec:
       # path: vault # Unsealer
   syncPolicy:
     syncOptions:
-      - ServerSideApply=true
       - CreateNamespace=true
