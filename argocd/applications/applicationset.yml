@@ -13,59 +13,48 @@ spec:
     preserveResourcesOnDeletion: true
   generators:
     - list:
-        # namespace defaults to name
+        # path and namespace default to name
         elements:
-          - { name: frigate, path: frigate }
-          - { name: grafana, path: grafana }
-          - { name: homeassistant, path: homeassistant }
-          - { name: homepage, path: homepage }
-          - { name: immich, path: immich }
-          - { name: n8n, path: n8n }
-          - { name: nextcloud, path: nextcloud }
-          - { name: postgresql, path: postgresql }
-          - { name: vault-snapshot, path: vault-snapshot }
-          - {
-              name: apcupsd-exporter,
-              path: monitoring/apcupsd-exporter,
-              namespace: monitoring,
-            }
-          - { name: gatus, path: monitoring/gatus, namespace: monitoring }
-          - {
-              name: node-exporter,
-              path: monitoring/node-exporter,
-              namespace: monitoring,
-            }
-          - {
-              name: openport-exporter,
-              path: monitoring/openport-exporter,
-              namespace: monitoring,
-            }
-          - {
-              name: prometheus,
-              path: monitoring/prometheus,
-              namespace: monitoring,
-            }
-          - {
-              name: snmp-exporter,
-              path: monitoring/snmp-exporter,
-              namespace: monitoring,
-            }
-          - { name: cloudflared, path: cloudflare, namespace: cloudflare }
-          - {
-              name: openkintai,
-              path: moreillon/openkintai,
-              namespace: moreillon,
-            }
-          - {
-              name: discord2webhook,
-              path: moreillon/discord2webhook,
-              namespace: moreillon,
-            }
-          - {
-              name: okf-mcp,
-              path: moreillon/okf-mcp,
-              namespace: moreillon,
-            }
+          - name: frigate
+          - name: grafana
+          - name: homeassistant
+          - name: homepage
+          - name: immich
+          - name: n8n
+          - name: nextcloud
+          - name: postgresql
+          - name: vault-snapshot
+          - name: apcupsd-exporter
+            path: monitoring/apcupsd-exporter
+            namespace: monitoring
+          - name: gatus
+            path: monitoring/gatus
+            namespace: monitoring
+          - name: node-exporter
+            path: monitoring/node-exporter
+            namespace: monitoring
+          - name: openport-exporter
+            path: monitoring/openport-exporter
+            namespace: monitoring
+          - name: prometheus
+            path: monitoring/prometheus
+            namespace: monitoring
+          - name: snmp-exporter
+            path: monitoring/snmp-exporter
+            namespace: monitoring
+          - name: cloudflared
+            path: cloudflare
+            namespace: cloudflare
+          - name: openkintai
+            path: moreillon/openkintai
+            namespace: moreillon
+          - name: discord2webhook
+            path: moreillon/discord2webhook
+            namespace: moreillon
+          - name: okf-mcp
+            path: moreillon/okf-mcp
+            namespace: moreillon
+          - name: pocket-id
   template:
     metadata:
       name: "{{ .name }}"
@@ -73,7 +62,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/secondhomelab/k8s.git
-        path: "{{ .path }}"
+        path: '{{ index . "path" | default .name }}'
         targetRevision: HEAD
       destination:
         server: https://kubernetes.default.svc
