@@ -4,7 +4,7 @@ metadata:
   name: data
   namespace: pocket-id
 spec:
-  storageClassName: local-path-provisioner-hdd
+  storageClassName: local-path-provisioner-ssd
   accessModes:
     - ReadWriteOnce
   resources:
