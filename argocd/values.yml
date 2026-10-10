@@ -5,3 +5,13 @@ configs:
 server:
   service:
     type: NodePort
+
+  # Tailnet only, through Envoy's tailnet listener
+  httproute:
+    enabled: true
+    hostnames:
+      - argocd.talos.tailnet.secondhomelab.com
+    parentRefs:
+      - name: eg
+        namespace: envoy-gateway-system
+        sectionName: tailnet

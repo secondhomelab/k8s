@@ -1,0 +1,22 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: tailnet-allowlist
+  namespace: envoy-gateway-system
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: eg
+      sectionName: tailnet
+  authorization:
+    defaultAction: Deny
+    rules:
+      - name: allow-tailnet
+        action: Allow
+        principal:
+          clientCIDRs:
+            # Tailscale clients reaching the hostPort on the node's tailnet IP are
+            # masqueraded to the cni0 gateway, so their tailnet address can't be
+            # matched. cloudflared arrives with its own pod IP, so it doesn't match.
+            - 10.244.0.1/32

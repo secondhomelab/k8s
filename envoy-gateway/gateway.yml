@@ -49,6 +49,16 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    # Plain HTTP for tailnet-only hosts, restricted by tailnet-allowlist.
+    # *.talos.tailnet.secondhomelab.com is a DNS-only Cloudflare record pointing
+    # at the node's Tailscale IP. Routes must set sectionName: tailnet.
+    - name: tailnet
+      protocol: HTTP
+      port: 80
+      hostname: "*.talos.tailnet.secondhomelab.com"
+      allowedRoutes:
+        namespaces:
+          from: All
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
