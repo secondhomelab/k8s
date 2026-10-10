@@ -10,7 +10,7 @@ spec:
       envoyService:
         type: ClusterIP
       # Bound to host ports 80/443 so tailnet hosts are reachable on the node's
-      # Tailscale IP without a port. Nothing listens on 443 until a listener uses it.
+      # Tailscale IP without a port.
       envoyDeployment:
         # A rolling update would deadlock: the new pod can't schedule while the
         # old one holds the hostPorts on the single node.
@@ -49,16 +49,32 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    # Plain HTTP for tailnet-only hosts, restricted by tailnet-allowlist.
+    # HTTPS for tailnet-only hosts, restricted by tailnet-allowlist.
     # *.talos.tailnet.secondhomelab.com is a DNS-only Cloudflare record pointing
     # at the node's Tailscale IP. Routes must set sectionName: tailnet.
+    # Plain HTTP requests for these hosts go to tailnet-http below.
     - name: tailnet
+      protocol: HTTPS
+      port: 443
+      hostname: "*.talos.tailnet.secondhomelab.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - group: ""
+            kind: Secret
+            name: wildcard-tailnet-tls
+      allowedRoutes:
+        namespaces:
+          from: All
+    # Plain HTTP for the same hosts, only redirected to HTTPS by
+    # tailnet-https-redirect, and also restricted by tailnet-allowlist.
+    - name: tailnet-http
       protocol: HTTP
       port: 80
       hostname: "*.talos.tailnet.secondhomelab.com"
       allowedRoutes:
         namespaces:
-          from: All
+          from: Same
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
