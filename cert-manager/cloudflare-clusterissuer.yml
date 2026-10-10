@@ -1,0 +1,33 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-cloudflare
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # No email: this repo is public, and Let's Encrypt no longer sends expiry emails
+    privateKeySecretRef:
+      name: letsencrypt-cloudflare-account-key
+    solvers:
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token
+              key: api-token
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cloudflare-api-token
+  namespace: cert-manager
+spec:
+  refreshInterval: 5m0s
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: cloudflare-api-token
+    creationPolicy: Orphan
+  dataFrom:
+    - extract:
+        key: cert-manager-cloudflare
