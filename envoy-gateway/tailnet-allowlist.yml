@@ -9,10 +9,6 @@ spec:
       kind: Gateway
       name: eg
       sectionName: tailnet
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: eg
-      sectionName: tailnet-http
   authorization:
     defaultAction: Deny
     rules:

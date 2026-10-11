@@ -52,7 +52,8 @@ spec:
     # HTTPS for tailnet-only hosts, restricted by tailnet-allowlist.
     # *.talos.tailnet.secondhomelab.com is a DNS-only Cloudflare record pointing
     # at the node's Tailscale IP. Routes must set sectionName: tailnet.
-    # Plain HTTP requests for these hosts go to tailnet-http below.
+    # No HTTP listener for these hosts: http:// requests land on the generic
+    # http listener, where no route matches them (404).
     - name: tailnet
       protocol: HTTPS
       port: 443
@@ -66,15 +67,6 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    # Plain HTTP for the same hosts, only redirected to HTTPS by
-    # tailnet-https-redirect, and also restricted by tailnet-allowlist.
-    - name: tailnet-http
-      protocol: HTTP
-      port: 80
-      hostname: "*.talos.tailnet.secondhomelab.com"
-      allowedRoutes:
-        namespaces:
-          from: Same
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
