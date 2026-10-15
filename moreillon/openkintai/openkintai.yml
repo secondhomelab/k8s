@@ -43,7 +43,7 @@ spec:
             - name: NUXT_PUBLIC_BREAK_RULES
               value: 6:30,8:60
             - name: NUXT_CLOCK_ALLOWED_NETWORKS
-              value: 219.161.214.9
+              value: self
             - name: NUXT_CLIENT_IP_HEADER
               value: cf-connecting-ip
           envFrom:
