@@ -11,6 +11,11 @@ spec:
   syncPolicy:
     # Deleting the ApplicationSet keeps the apps' resources in the cluster
     preserveResourcesOnDeletion: true
+  # Argo CD Image Updater (argocd write-back) sets image overrides on the live
+  # Application; without this the ApplicationSet reverts them every cycle.
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/source/kustomize/images
   generators:
     - list:
         # path and namespace default to name
