@@ -7,14 +7,23 @@ authentik:
   postgresql:
     host: postgresql.postgresql
     name: authentik
+  env:
+    # Forces Gunicorn to run only 1 process, saving ~150Mi-250Mi on the server pod
+    - name: AUTHENTIK_WEB__WORKERS
+      value: "1" # < 2 is not recommended
+
+    # Keeps background worker processes at baseline
+    - name: AUTHENTIK_WORKER__PROCESSES
+      value: "1"
+
+    # Lowers concurrent worker threads to 1 for sequential task processing
+    - name: AUTHENTIK_WORKER__THREADS
+      value: "1"
 
 postgresql:
   enabled: false
 
 server:
-  env:
-    - name: AUTHENTIK_WEB__WORKERS
-      value: "1" # < 2 is not recommended
   resources:
     requests:
       cpu: 10m
@@ -24,9 +33,6 @@ server:
       memory: 850Mi
 
 worker:
-  env:
-    - name: AUTHENTIK_WEB__THREADS
-      value: "1" # Default 4
   resources:
     requests:
       cpu: 10m
