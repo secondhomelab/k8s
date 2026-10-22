@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: nextcloud
-          image: nextcloud:34.0.0
+          image: nextcloud:35.0.2
           resources:
             requests:
               memory: 256Mi
@@ -32,7 +32,7 @@ spec:
               name: data
 
         - name: cron
-          image: nextcloud:34.0.0
+          image: nextcloud:35.0.2
           command:
             - /cron.sh
           resources:
