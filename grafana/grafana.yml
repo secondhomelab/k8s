@@ -57,7 +57,6 @@ metadata:
     gethomepage.dev/name: Grafana
     gethomepage.dev/icon: grafana
     gethomepage.dev/group: WAN
-
 spec:
   hostnames:
     - grafana.secondhomelab.com
@@ -68,12 +67,5 @@ spec:
       namespace: envoy-gateway-system
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
-          name: grafana
+        - name: grafana
           port: 3000
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /

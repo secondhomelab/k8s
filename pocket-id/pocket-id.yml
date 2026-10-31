@@ -81,7 +81,3 @@ spec:
     - backendRefs:
         - name: pocket-id
           port: 1411
-      matches:
-        - path:
-            type: PathPrefix
-            value: /

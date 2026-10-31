@@ -18,15 +18,8 @@ spec:
       namespace: envoy-gateway-system
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
-          name: authentik-server
+        - name: authentik-server
           port: 80
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
       # Necessary for addition to solve "The request failed and the interceptors did not return an alternative response"
       filters:
         - type: RequestHeaderModifier

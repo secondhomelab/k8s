@@ -87,12 +87,5 @@ spec:
       namespace: envoy-gateway-system
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
-          name: n8n
+        - name: n8n
           port: 5678
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /

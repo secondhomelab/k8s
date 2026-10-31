@@ -19,12 +19,5 @@ spec:
       namespace: envoy-gateway-system
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
-          name: nextcloud
+        - name: nextcloud
           port: 80
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
