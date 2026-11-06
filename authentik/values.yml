@@ -38,5 +38,7 @@ worker:
       cpu: 10m
       memory: 350Mi
     limits:
-      cpu: 200m
+      # 200m throttled "ak healthcheck" past its 3 s liveness timeout when the
+      # worker was busy (16 restarts by 2026-11-06)
+      cpu: "1"
       memory: 500Mi
