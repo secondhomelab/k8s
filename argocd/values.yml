@@ -10,6 +10,7 @@ server:
   httproute:
     enabled: true
     hostnames:
+      - argocd.tailnet.secondhomelab.com
       - argocd.talos.tailnet.secondhomelab.com
     parentRefs:
       - group: gateway.networking.k8s.io

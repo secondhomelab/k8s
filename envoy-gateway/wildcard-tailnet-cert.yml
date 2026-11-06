@@ -9,4 +9,5 @@ spec:
     name: letsencrypt-cloudflare
     kind: ClusterIssuer
   dnsNames:
-    - "*.talos.tailnet.secondhomelab.com"
+    - "*.tailnet.secondhomelab.com"
+    - "*.talos.tailnet.secondhomelab.com" # to be retired
