@@ -61,7 +61,6 @@ spec:
   # Tailnet only (2026-11-06), through Envoy's tailnet listener
   hostnames:
     - grafana.tailnet.secondhomelab.com
-    - grafana.talos.tailnet.secondhomelab.com
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway

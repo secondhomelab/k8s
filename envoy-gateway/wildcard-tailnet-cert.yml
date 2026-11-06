@@ -10,4 +10,3 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - "*.tailnet.secondhomelab.com"
-    - "*.talos.tailnet.secondhomelab.com" # to be retired

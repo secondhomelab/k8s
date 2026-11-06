@@ -6,7 +6,6 @@ metadata:
 spec:
   hostnames:
     - prometheus.tailnet.secondhomelab.com
-    - prometheus.talos.tailnet.secondhomelab.com
   parentRefs:
     - name: eg
       namespace: envoy-gateway-system

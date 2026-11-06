@@ -52,10 +52,9 @@ spec:
     # HTTPS for tailnet-only hosts, restricted by tailnet-allowlist.
     # *.tailnet.secondhomelab.com is a DNS-only Cloudflare record pointing at the
     # node's Tailscale IP (resolved through Tailscale Split DNS for
-    # tailnet.secondhomelab.com). The hostname is a suffix match, so it also
-    # covers *.talos.tailnet (to be retired, 2026-11-06). Other tailnet machines
-    # get their own, more specific record (e.g. pve.tailnet). Routes must set
-    # sectionName: tailnet.
+    # tailnet.secondhomelab.com). It replaced *.talos.tailnet on 2026-11-06.
+    # Other tailnet machines get their own, more specific record (e.g.
+    # pve.tailnet). Routes must set sectionName: tailnet.
     # No HTTP listener for these hosts: http:// requests land on the generic
     # http listener, where no route matches them (404).
     - name: tailnet

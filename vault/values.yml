@@ -18,7 +18,6 @@ server:
     enabled: true
     hostnames:
       - vault.tailnet.secondhomelab.com
-      - vault.talos.tailnet.secondhomelab.com
     parentRefs:
       - group: gateway.networking.k8s.io
         kind: Gateway
