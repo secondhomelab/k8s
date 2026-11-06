@@ -74,7 +74,7 @@ metadata:
   name: immich
   namespace: immich
   annotations:
-    gethomepage.dev/enabled: "true"
+    gethomepage.dev/enabled: "false"
     gethomepage.dev/name: Immich
     gethomepage.dev/icon: immich
     gethomepage.dev/group: WAN
