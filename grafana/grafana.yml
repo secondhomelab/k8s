@@ -30,7 +30,7 @@ spec:
                 name: env
           env:
             - name: GF_SERVER_ROOT_URL
-              value: https://grafana.secondhomelab.com
+              value: https://grafana.talos.tailnet.secondhomelab.com
             - name: GF_DATABASE_TYPE
               value: postgres
 
@@ -56,15 +56,17 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: Grafana
     gethomepage.dev/icon: grafana
-    gethomepage.dev/group: WAN
+    gethomepage.dev/group: Tailnet
 spec:
+  # Tailnet only (2026-11-06), through Envoy's tailnet listener
   hostnames:
-    - grafana.secondhomelab.com
+    - grafana.talos.tailnet.secondhomelab.com
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: eg
       namespace: envoy-gateway-system
+      sectionName: tailnet
   rules:
     - backendRefs:
         - name: grafana
