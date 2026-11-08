@@ -29,10 +29,11 @@ spec:
           env:
             - name: GENERIC_TIMEZONE
               value: Asia/Tokyo
+            # Editor tailnet only (2026-11-08); webhooks and forms stay public
             - name: N8N_EDITOR_BASE_URL
-              value: https://n8n.secondhomelab.com
+              value: https://n8n.tailnet.secondhomelab.com
             - name: WEBHOOK_URL
-              value: https://n8n.secondhomelab.com
+              value: https://n8n.secondhomelab.com/
 
             # DB
             - name: DB_TYPE
@@ -75,8 +76,29 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: N8n
     gethomepage.dev/icon: n8n
-    gethomepage.dev/group: WAN
-
+    gethomepage.dev/group: Tailnet
+spec:
+  # Editor, REST API and test webhooks: tailnet only (2026-11-08)
+  hostnames:
+    - n8n.tailnet.secondhomelab.com
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: eg
+      namespace: envoy-gateway-system
+      sectionName: tailnet
+  rules:
+    - backendRefs:
+        - name: n8n
+          port: 5678
+---
+# Public through the Cloudflare tunnel: production webhooks (LINE bots, Discord)
+# and forms (N8n / Nextcloud registration) only. Any other path gets a 404.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: n8n-public
+  namespace: n8n
 spec:
   hostnames:
     - n8n.secondhomelab.com
@@ -86,6 +108,13 @@ spec:
       name: eg
       namespace: envoy-gateway-system
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /webhook/
+        - path:
+            type: PathPrefix
+            value: /form/
+      backendRefs:
         - name: n8n
           port: 5678
