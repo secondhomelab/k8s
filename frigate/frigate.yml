@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
         - name: frigate
-          image: ghcr.io/blakeblackshear/frigate:0.17.2
+          image: ghcr.io/blakeblackshear/frigate:0.18.2
 
           env:
             - name: OPENCV_FFMPEG_CAPTURE_OPTIONS # IMPORTANT: Fixing probes
