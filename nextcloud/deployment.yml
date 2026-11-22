@@ -4,7 +4,7 @@ metadata:
   name: nextcloud
   namespace: nextcloud
 spec:
-  replicas: 0
+  replicas: 1
   strategy:
     type: Recreate
   selector:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: nextcloud
-          image: nextcloud:35.0.2
+          image: nextcloud:35.0.3
           resources:
             requests:
               memory: 256Mi
@@ -32,7 +32,7 @@ spec:
               name: data
 
         - name: cron
-          image: nextcloud:35.0.2
+          image: nextcloud:35.0.3
           command:
             - /cron.sh
           resources:
