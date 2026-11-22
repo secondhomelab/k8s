@@ -26,7 +26,6 @@ spec:
           - name: homepage
           - name: immich
           - name: n8n
-          - name: nextcloud
           - name: postgresql
           - name: vault-snapshot
           - name: apcupsd-exporter
@@ -52,9 +51,6 @@ spec:
             namespace: cloudflare
           - name: openkintai
             path: moreillon/openkintai
-            namespace: moreillon
-          - name: discord2webhook
-            path: moreillon/discord2webhook
             namespace: moreillon
           - name: okf-mcp
             path: moreillon/okf-mcp
