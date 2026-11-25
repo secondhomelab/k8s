@@ -26,6 +26,7 @@ spec:
           - name: homepage
           - name: immich
           - name: n8n
+          - name: nextcloud
           - name: postgresql
           - name: vault-snapshot
           - name: apcupsd-exporter
