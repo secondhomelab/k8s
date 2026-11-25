@@ -24,7 +24,6 @@ spec:
           - name: grafana
           - name: homeassistant
           - name: homepage
-          - name: immich
           - name: n8n
           - name: nextcloud
           - name: postgresql
